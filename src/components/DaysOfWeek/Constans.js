@@ -1,0 +1,1 @@
+export const weekDaysConstants = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
