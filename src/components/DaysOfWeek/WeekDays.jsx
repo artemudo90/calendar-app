@@ -3,7 +3,7 @@ import styles from './WeekDays.module.sass'
 import {weekDaysConstants} from "./Constans";
 
 const renderDaysOfWeek = ()=>{
-   return weekDaysConstants.map((day, i) =><span key={i}>{day}</span>)//ЗАЧЕМ КЛЮЧ???????????????????????????????
+   return weekDaysConstants.map((day, i) =><span key={i}>{day}</span>)
 };
 
 class WeekDays extends Component {

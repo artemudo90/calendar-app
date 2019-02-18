@@ -10,6 +10,8 @@ import WeekMenu from "./components/WeekMenu/WeekMenu";
 import WeekNumbers from "./components/WeekNumbers/WeekNumbers";
 import Menu from "./components/Menu/Menu";
 import Date from "./components/Date/Date";
+import Event from "./components/Event/Event";
+import EventDate from "./components/Event/EventDate";
 
 
 class App extends Component {
@@ -25,7 +27,9 @@ class App extends Component {
             setCurrentWeek: (week) => this.setCurrentWeek(week),
             setCurrentMonth: (month) => this.setCurrentMonth(month),
             isOpenedMenu: false,
-            showMenu: () => this.showMenu()
+            showMenu: () => this.showMenu(),
+            createEvent: (event) => this.createEvent(event),
+            events: null
         }
     }
 
@@ -47,15 +51,34 @@ class App extends Component {
                     <Route exact path='/' render={() => <WeekNumbers currentWeek={this.state.currentWeek}
                                                                      changeDate={this.state.changeDate}
                                                                      currentDate={this.state.currentDate}
-                                                                     setCurrentMonth={this.state.setCurrentMonth}/>}/>
+                                                                     setCurrentMonth={this.state.setCurrentMonth}
+                                                                     createEvent={this.state.createEvent}/>}/>
                     <Route path='/month' render={() => <MonthNumbers currentMonth={this.state.currentMonth}
                                                                      changeDate={this.state.changeDate}
                                                                      currentDate={this.state.currentDate}
-                                                                     setCurrentWeek={this.state.setCurrentWeek}/>}/>
+                                                                     setCurrentWeek={this.state.setCurrentWeek}
+                                                                     createEvent={this.state.createEvent}/>}/>
                     <Date currentDate={this.state.currentDate}/>
+                    {this.state.events}
                 </div>
             </BrowserRouter>
         )
+    }
+
+    createEvent(event) {
+        if (event == null) {
+            this.setState({events: null})
+            return
+        }
+        const arrEvents = [];
+        arrEvents.push(<EventDate key={-1} date={moment(event.date,'DD.MM.YYYY').format('ddd,DD MMMM').toUpperCase()}/>)
+        for (let i = 0; i < event.events.length; i++) {
+            arrEvents.push(<Event key={i}
+                name={event.events[i].name}
+                body={event.events[i].body}
+                time={event.events[i].time}/>);
+        }
+        this.setState({events: arrEvents})
     }
 
     showMenu() {
